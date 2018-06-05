@@ -1,0 +1,13 @@
+---
+- name: ensure main interfaces configuration does exist
+  template:
+    src: "interfaces.j2"
+    dest: "/etc/network/interfaces"
+  become: true
+
+- name: ensure interfaces configuration is correct
+  template:
+    src: "interfaces.d.j2"
+    dest: "/etc/network/interfaces.d/{{ item.key }}"
+  with_dict: "{{ network }}"
+  become: true
